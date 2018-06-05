@@ -1,14 +1,24 @@
 
-/* General */
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  background-color: black;
 
+/* General */
+@font-face {    
+  font-family: "Alogard";
+  src: url( "../images/fonts/alagard_by_pix3m-d6awiwp.ttf" ) format( "ttf" );
 }
 
+body {
+  font-family: "Alogard", Helvetica;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: black;
+}
+/* HTML */
 /* Containers */
 .top-container {
   flex-direction: row;
@@ -17,18 +27,17 @@ body {
 }
 
 .game-container {
-  min-width: 500px;
-  min-height: 525px;
+  min-width: 520px;
+  min-height: 520px;
   padding: 10px;
+  background: url( "./../images/game_border/gameboard_border.png");
   background-repeat: no-repeat;
   box-sizing: border-box;
   margin: 0 40px;
-  border: solid black
 }
 
 /* Gameboard */
 .game-board {
-
   width: 480px;
   height: 478px;
   display: flex;
@@ -36,49 +45,45 @@ body {
   flex-wrap: wrap;
 }
 
+.chatbox-container {
+  display: flex;
+  flex-direction: row;
+  min-height: 150px;
+}
+
+.portrait-box {
+  background-color: green;
+  border: 1px solid black;
+  min-width: 150px;
+
+}
+.chat-box {
+  background-color:red;
+  border: 1px solid black;
+  min-width: 350px;
+
+}
+
+/* GAME */
 /* Tiles */
 .tile {
   min-width: 5.26%;
   min-height: 5.26%;
   background-image: url("../images/board_ground/ground_visited.png");
-  /* border: 0.5px solid black; */
-  box-sizing: border-box;
   flex: 1;
 }
 
+.border {
+  background-image: url("../images/sprite_border.png");
+  background-position: center;
+  background-size: cover;
+}
 .unvisited {
   background-image: url("../images/board_ground/ground_unvisited.png");
   background-position: center;
   background-size: cover;
 }
-.visited {
-  background-image: url("../images/board_ground/ground_visited.png");
-  background-position: center;
-  background-size: cover;
-}
-.out-of-sight {
-  background-color: black;
-}
-.border-vertically {
-  background-image: url("../images/game_border/borderdecoration_vertical.png");
-  background-position: center;
-  background-size: cover;
-}
-.border-horinzontally {
-  background-image: url("../images/game_border/borderdecoration_horizontal.png");
-  background-position: center;
-  background-size: cover;
-}
-.border {
-  background-image: url("../images/boulder/PNG/16px/boulder.png");
-  background-position: center;
-  background-size: cover;
-}
-.player {
-  background-image: url("../images/player_char/sprite_up.png");
-  background-position: center;
-  background-size: cover;
-}
+
 .princess {
   background-image: url("../images/npc_princess/princess_sprite\ down.png");
   background-position: center;
@@ -89,3 +94,30 @@ body {
   background-position: center;
   background-size: cover;
 }
+.fire-sword {
+  background-image: url("../images/player_items/w_broadsword_fire.png");
+}   
+.fow {
+  background-image: url("../images/board_ground/ground_fow.png");
+}
+.visited {
+  background-image: url("../images/board_ground/ground_visited.png");
+  background-position: center;
+  background-size: cover;
+}
+.border-visited {
+  background-image: url("../images/game_border/sprite_border.png");
+  background-position: center;
+  background-size: cover;
+}
+.player {
+  background-image: url("../images/player_char/sprite_up.png");
+  background-position: center;
+  background-size: cover;
+}
+.gate {
+  background-image: url("../images/game_border/gate.png");
+  background-position: center;
+  background-size: cover;
+}
+
