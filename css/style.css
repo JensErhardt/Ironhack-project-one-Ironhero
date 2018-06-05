@@ -1,0 +1,91 @@
+
+/* General */
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: black;
+
+}
+
+/* Containers */
+.top-container {
+  flex-direction: row;
+  justify-content: center;
+  background-color: green;
+}
+
+.game-container {
+  min-width: 500px;
+  min-height: 525px;
+  padding: 10px;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  margin: 0 40px;
+  border: solid black
+}
+
+/* Gameboard */
+.game-board {
+
+  width: 480px;
+  height: 478px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+/* Tiles */
+.tile {
+  min-width: 5.26%;
+  min-height: 5.26%;
+  background-image: url("../images/board_ground/ground_visited.png");
+  /* border: 0.5px solid black; */
+  box-sizing: border-box;
+  flex: 1;
+}
+
+.unvisited {
+  background-image: url("../images/board_ground/ground_unvisited.png");
+  background-position: center;
+  background-size: cover;
+}
+.visited {
+  background-image: url("../images/board_ground/ground_visited.png");
+  background-position: center;
+  background-size: cover;
+}
+.out-of-sight {
+  background-color: black;
+}
+.border-vertically {
+  background-image: url("../images/game_border/borderdecoration_vertical.png");
+  background-position: center;
+  background-size: cover;
+}
+.border-horinzontally {
+  background-image: url("../images/game_border/borderdecoration_horizontal.png");
+  background-position: center;
+  background-size: cover;
+}
+.border {
+  background-image: url("../images/boulder/PNG/16px/boulder.png");
+  background-position: center;
+  background-size: cover;
+}
+.player {
+  background-image: url("../images/player_char/sprite_up.png");
+  background-position: center;
+  background-size: cover;
+}
+.princess {
+  background-image: url("../images/npc_princess/princess_sprite\ down.png");
+  background-position: center;
+  background-size: cover;
+}
+.end-boss {
+  background-image: url("../images/npc_endboss/sprite_end\ boss_down.png");
+  background-position: center;
+  background-size: cover;
+}
