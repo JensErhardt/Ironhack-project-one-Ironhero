@@ -3,27 +3,37 @@
 /* General */
 @font-face {    
   font-family: "Alogard";
-  src: url( "../images/fonts/alagard_by_pix3m-d6awiwp.ttf" ) format( "ttf" );
+  src: url( "../images/fonts/ef_conv_zip_Jk64jd9vZy550GbwK82bGAeF/alagard_by_pix3m-d6awiwp.woff" ) format( "woff" );
 }
-
-body {
-  font-family: "Alogard", Helvetica;
+/* Ironhero blue: #189ad3
+     darker blue: #005073 */
+* {
+  color: #189ad3;
+  font-family: "Alogard"
 }
-
 body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     background-color: black;
-    color: black;
+    font-family: "Alogard", Helvetica;
 }
+
 /* HTML */
 /* Containers */
-.top-container {
-  flex-direction: row;
+
+.screen-container {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  background-color: green;
+  align-items: center;
+}
+
+.top-container {
+  flex-direction: column;
+  justify-content: center;
+  width: auto;
+}
+
+h1 {
+  text-decoration: underline;
 }
 
 .game-container {
@@ -37,6 +47,18 @@ body {
 }
 
 /* Gameboard */
+
+.center-container {
+ display: flex;
+ flex-direction: row;
+ justify-content: center;
+}
+
+.left-container {
+  background-color:black;
+  min-width: 6vw;
+}
+
 .game-board {
   width: 480px;
   height: 478px;
@@ -44,25 +66,26 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
 }
+.time-box-container {
+  border: solid #005073;
+  width: 86px;
+  height: 66px;
+}
 
-.chatbox-container {
+#time-box {
+  color: white;
+  background-color: #005073;
+  border: solid #189ad3;
+  width: 80px;
+  height: 60px;
   display: flex;
-  flex-direction: row;
-  min-height: 150px;
+  flex-direction: column;
+
+  align-items: center;
 }
 
-.portrait-box {
-  background-color: green;
-  border: 1px solid black;
-  min-width: 150px;
 
-}
-.chat-box {
-  background-color:red;
-  border: 1px solid black;
-  min-width: 350px;
 
-}
 
 /* GAME */
 /* Tiles */
@@ -96,7 +119,15 @@ body {
 }
 .fire-sword {
   background-image: url("../images/player_items/w_broadsword_fire.png");
+  background-position: center;
+  background-size: cover;
+  background-color:gray ;
 }   
+.budgi {
+  background-image: url("../images/npc_misc/budgi_sprite.png");
+  background-position: center;
+  background-size: cover;
+}
 .fow {
   background-image: url("../images/board_ground/ground_fow.png");
 }
@@ -121,3 +152,45 @@ body {
   background-size: cover;
 }
 
+/* Chatbox */
+.chatbox-container {
+  display: flex;
+  flex-direction: row;
+  min-width: 640px;
+  max-width: 640px;
+  min-height: 120px;
+  border: solid #005073;
+
+}
+
+.portrait-box {
+  background-color: #005073;
+  border: 2.5px solid  #189ad3;
+  min-width: 120px;
+
+}
+.chat-box {
+  background-color:#005073;
+  color: white;
+  border: 2.5px solid  #189ad3;
+  min-width: 500px;
+  max-width: 500px;
+  padding: 5px;
+}
+
+.princess-portrait {
+  background-image: url("../images/npc_princess/princess_portrait.png");
+  background-position: center;
+  background-size: cover;
+}
+.villian-portrait {
+  background-image: url("../images/npc_endboss/endboss_portrait.png");
+  background-position: center;
+  background-size: cover;
+}
+.budgi-portrait {
+  background-image: url("../images/npc_misc/budgi_portrait.png");
+  background-position: center;
+  background-size: cover;
+
+}

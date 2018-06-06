@@ -1,4 +1,4 @@
-
+// MVP
 // B = border
 // E = end boss 
 // F = fire sword
@@ -8,7 +8,7 @@
 // S = princess
 // V = visited
 
-
+// EXTRA
 // T = dungeon budgi
 // D = dragon
 
@@ -19,7 +19,7 @@
 function Game() {
   this.board = [
     ["G", "B", "B", "B", "U", "U", "U", "B", "B", "B", "B", "B", "U", "U", "U", "U", "U", "U", "U",],
-    ["P", "U", "F", "B", "U", "B", "U", "B", "U", "S", "U", "B", "U", "B", "B", "B", "U", "U", "U",],
+    ["P", "U", "U", "B", "U", "B", "U", "B", "U", "S", "U", "B", "U", "B", "B", "B", "U", "T", "U",],
     ["B", "B", "U", "B", "U", "B", "U", "B", "U", "U", "U", "B", "U", "B", "U", "B", "U", "U", "U",],
     ["U", "B", "U", "B", "U", "B", "U", "U", "B", "U", "B", "U", "U", "U", "U", "B", "B", "B", "B",],
     ["U", "U", "U", "B", "U", "B", "U", "B", "U", "E", "U", "B", "U", "B", "U", "B", "U", "B", "U",],
@@ -32,7 +32,7 @@ function Game() {
     ["U", "B", "U", "U", "U", "U", "U", "U", "U", "B", "B", "B", "B", "B", "B", "B", "B", "B", "U",],
     ["U", "B", "U", "B", "B", "B", "B", "B", "U", "B", "U", "U", "U", "U", "U", "B", "U", "B", "U",],
     ["U", "B", "U", "B", "U", "U", "U", "B", "U", "B", "U", "B", "U", "B", "U", "B", "U", "B", "U",],
-    ["U", "B", "U", "B", "U", "B", "U", "B", "U", "B", "U", "U", "U", "B", "U", "U", "U", "U", "U",],
+    ["U", "B", "U", "B", "F", "B", "U", "B", "U", "B", "U", "U", "U", "B", "U", "U", "U", "U", "U",],
     ["U", "B", "U", "U", "B", "B", "U", "B", "U", "B", "B", "U", "B", "U", "U", "B", "B", "B", "B",],
     ["U", "B", "B", "U", "U", "U", "U", "B", "U", "U", "U", "U", "B", "U", "B", "U", "B", "U", "U",],
     ["U", "U", "U", "B", "B", "B", "B", "B", "U", "B", "B", "B", "B", "U", "B", "U", "U", "U", "U",],
@@ -48,6 +48,7 @@ function Game() {
 
 var hero = new Game();
 createBoard();
+updateTime();
 
 
 //---------------VIEW---------------//
@@ -120,7 +121,11 @@ function updateTiles() {
       }
       // Insert gate
       if (hero.board[i][j] == "G") {
-        $("#" + i + "-" + j).addClass(" bo  gate");
+        $("#" + i + "-" + j).addClass("gate");
+      }
+      // Insert budgi
+      if (hero.board[i][j] == "T") {
+        $("#" + i + "-" + j).addClass("budgi");
       }
     }
   }
@@ -179,9 +184,14 @@ Game.prototype.moveUp = function () {
     console.log("y end of board");
   } else if (this.board[this.player.y - 1][this.player.x] === "B") {
     console.log("wall");
+  } else if (this.board[this.player.y - 1][this.player.x] === "G") {
+    console.log("wall");
   } else if (this.board[this.player.y - 1][this.player.x] === "S") {
     gameOver();
-  } else if (this.board[this.player.y -1][this.player.x] === "F") {
+  } else if (this.board[this.player.y - 1][this.player.x] === "T") {
+    budgiDoesJokes();
+  } 
+  else if (this.board[this.player.y - 1][this.player.x] === "F") {
     getFireSword();
     this.player.y = this.player.y - 1;
     this.board[this.player.y][this.player.x] = "P";
@@ -214,7 +224,10 @@ Game.prototype.moveRight = function () {
     console.log("wall");
   } else if (this.board[this.player.y][this.player.x + 1] === "S") {
     gameOver();
-  } else if (this.board[this.player.y][this.player.x + 1] === "F") {
+  } else if (this.board[this.player.y][this.player.x + 1] === "T") {
+    budgiDoesJokes();
+  }
+  else if (this.board[this.player.y][this.player.x + 1] === "F") {
     getFireSword();
     this.player.x = this.player.x + 1;
     this.board[this.player.y][this.player.x] = "P";
@@ -235,6 +248,7 @@ Game.prototype.moveRight = function () {
     this.board[this.player.y][this.player.x] = "P";
     this.board[this.player.y][this.player.x - 1] = "V";
   }
+
   changeDirectionRight();
 }
 // Move down
@@ -246,6 +260,8 @@ Game.prototype.moveDown = function () {
     console.log("wall");
   } else if (this.board[this.player.y + 1][this.player.x] === "S") {
     gameOver();
+  } else if (this.board[this.player.y + 1][this.player.x] === "T") {
+    budgiDoesJokes();
   } else if (this.board[this.player.y + 1][this.player.x] === "F") {
     getFireSword();
     this.player.y = this.player.y + 1;
@@ -276,8 +292,10 @@ Game.prototype.moveLeft = function () {
     console.log("board x reached")
   } else if (this.board[this.player.y][this.player.x - 1] === "B") {
     console.log("wall");
-  } else if (this.board[this.player.y][this.player.x - 1] === "B") {
+  } else if (this.board[this.player.y][this.player.x - 1] === "S") {
     gameOver();
+  } else if (this.board[this.player.y][this.player.x - 1] === "T") {
+    budgiDoesJokes();
   } else if (this.board[this.player.y][this.player.x - 1] === "F") {
     getFireSword();
     this.player.x = this.player.x - 1;
@@ -361,26 +379,101 @@ function removeFogOfWar() {
     $("#" + (hero.player.y + viewDeltaOne) + "-" + (hero.player.x - viewDeltaOne)).addClass("border-visited");
   }
 
+
+  // GAME FUNCTION
 }
 function gameOver() {
+  $(".center-container").hide();
+  var princessText = "Laure: Ironhero you've saved me. You're truly the best. Here's a beer for you :-)"
+    + "System: Congratulations! You have saved the Ironprincess. Refresh page for another try. Maby there is something you've missed?!";
+  prinessCalls(princessText);
   console.log("You've won");
 }
+function playerDefeated() {
+  $(".center-container").hide();
+  var vilianText = "Zombie-TA: Hahaha. You have been defeated by my Greatness. Better do your homework and try again if you dare!!!"
+  vilianCalls(vilianText);
+  console.log("You were defeated");
+}
 function defeatEndBoss() {
+  clearInterval(gameTimer);
+  var vilianText = "Zombie-TA: Arrrrghhh. I was defeated by a fool. You.. will never have the princ...*dies*."
+  vilianCalls(vilianText);
   console.log("You've defeated the Zombie-TA");
 }
 function getFireSword() {
   hero.player.weapon = "firesword";
 }
-function playerDefeated() {
-  console.log("You were defeated");
-}
-function timeLeft() {
 
-}
 
-var gameTime = 100;
-var gameTimeLeft = setInterval(function() {
+// GAME TIMER
+var gameTime = 91;
+var gameTimer = setInterval(function () {
   gameTime--;
+  if (gameTime === 0) {
+    playerDefeated();
+  } else if (gameTime === 90) {
+    var princessText = "Laure: Ironhero! I didn't finish my exercises in time so I was kidnapped by a zombie-TA. Please save me."
+      + " The only thing that can defeat the zombie-TA is the sword of flames."
+      + " It is hidden somewhere in this dungen und you have to find it."
+      + " Hurry up, we don't have much time!!!"
+    prinessCalls(princessText);
+    budgiText = "Chirp Chirp! "
+
+  } else if (gameTime === 75) {
+    var vilianText = "Zombie-TA: Hahaha. You will never save the Ironprincess stupid. She is mine forever and I will let her do excercies for eternity!!!"
+    + " Princess do you hear me?! FOREVER!!!"
+    vilianCalls(vilianText);
+  } else if (gameTime === 65) {
+    var princessText = "Laure: Nooo never!!! Ironhero help me!"
+    prinessCalls(princessText);
+  } else if (gameTime === 55) {
+    var princessText = "Laure: Ironhero! Hurry up!"
+    prinessCalls(princessText);
+  } else if (gameTime === 45) {
+    var vilianText = "Zombie-TA: Screw you Ironhero. You will never make it in time. By the way..did you think of your pretty little sword hah?";
+    vilianCalls(vilianText);
+  } else if (gameTime == 10) {
+    var princessText = "IRONHERO HURRY!!!"
+    prinessCalls(princessText);
+  } else if (gameTime == 5) {
+    var vilianText = "I told you, that you'll never make it!!! Afterwards I'll do grocerys and have a beer."
+  }
+
+
 }, 1000)
+function updateTime() {
+  $("#time").text(gameTime);
+}
+setInterval(function () {
+  updateTime();
+}, 1000);
 
-
+// NPC / CHATBOX CONTROL FUNCTIONS
+function prinessCalls(princessText) {
+  $(".portrait-box").removeClass("budgi-portrait");
+  $(".portrait-box").removeClass("villian-portrait");
+  $(".portrait-box").addClass("princess-portrait");
+  $(".chat-box").text(princessText)
+  // $(".princess-portrait").delay(2000).fadeOut();
+  // $(".chat-box").delay(2000).fadeOut();
+}
+function vilianCalls(vilianText) {
+  $(".portrait-box").removeClass("budgi-portrait");
+  $(".portrait-box").removeClass("princess-portrait");
+  $(".portrait-box").addClass("villian-portrait");
+  $(".chat-box").text(vilianText);
+}
+function budgiDoesJokes() {
+  var budgiJokes = [
+    "Aşkım the budgi: Chirp Chirp. I will tell you a joke! Can a kangaroo jump higher than a house? Of course, a house doesn’t jump at all. Now, this was fun but it also took you a few seconds, you better hurry up Ironhero! Chirp Chirp!!!",
+    "Aşkım the budgi: Chirp Chirp. I will tell you a black humor joke! You know you're ugly when you get handed the camera every time they make a group photo. Now, this was fun but it also took you a few seconds, you better hurry up Ironhero! Chirp Chirp!!!",
+    "Aşkım the budgi: Chirp Chirp. Did you know that I had a dog? My dog used to chase people on a bike a lot. It got so bad, finally I had to take his bike away. Now, this was fun but it also took you a few seconds, you better hurry up Ironhero! Chirp Chirp!!!",
+    "Aşkım the budgi: Chirp Chirp. Here's one for the boys and the girls. What is the difference between a snowman and a snowwoman? Snowballs!! Now, this was fun but it also took you a few seconds, you better hurry up Ironhero! Chirp Chirp!!!",
+    "Aşkım the budgi: Chirp Chirp. I have told you enough jokes. Aşkım wants a cookie. Chirp Chirp.",
+    "Aşkım the budgi: Chirp Chirp. Don't be so rude..give Aşkım a acookie. Chirp Chirp.",
+  ];
+  var ranNb = Math.floor(Math.random() * budgiJokes.length);
+  $(".portrait-box").addClass("budgi-portrait");
+  $(".chat-box").text(budgiJokes[ranNb]);
+}
