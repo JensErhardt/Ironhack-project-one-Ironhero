@@ -1,11 +1,11 @@
 # project-ironhero
 
-Introduction
+<h2>Introduction<h2>
 
-This is the first of the projects I am doing during the fullstack web developement Bootcamp.
+This is the first of three projects I am doing during the Ironhack fullstack web developement bootcamp in Berlin.
 
-What is it about?
+What's the game about?
 
-"Ironhero" and the tale of the Ironprincess is game based on jQuery DOM manipulation. The goal is to make it through a maze, defeat the endboss and rescue the Ironprinces within a certain timelimit. 
+"Ironhero" and the tale of the Ironprincess is a game based on DOM manipulation with jQuery. The goal is to make it through a maze, defeat the endboss and rescue the Ironprinces within a certain timelimit. 
 
-While the player is exploring the maze he can collect items, explore hidden chambers and interact with npcs.
+While the player explores the maze he can collect items, explore hidden chambers and interact with npcs.
