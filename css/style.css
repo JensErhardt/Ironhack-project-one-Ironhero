@@ -156,6 +156,13 @@ h1 {
   background-position: center;
   background-size: cover;
 }
+.game-over {
+  font-family: "Alogard"; 
+  font-size: 100px;
+  text-align: center;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
 
 /* Chatbox */
 .chatbox-container {

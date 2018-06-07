@@ -47,7 +47,7 @@ function Game() {
     weapon: "",
     budgiTimeCrystal: 0,
     pet: "",
-    
+
   };
 };
 
@@ -418,7 +418,10 @@ function removeFogOfWar() {
 // GAME FUNCTION
 
 function gameOver() {
-  $(".center-container").hide();
+  clearInterval(gameTimer);
+  $(".game-container").hide();
+  $(".center-container").addClass("game-over");
+  $(".center-container").text("Game Over");
   if (hero.player.pet = "dragon") {
     var princessText = "Laure: Ironhero! Thank you for saving me and bringing Pepe back to me. You are even better than the best. Here are two beers for you and also a slice of pizza."
       + " Congratulations! You have saved the Ironprincess and Pepe. Refresh page for another try. Maby there is something you missed?!";
@@ -432,7 +435,10 @@ function gameOver() {
   console.log("You've won");
 }
 function playerDefeated() {
-  $(".center-container").hide();
+  clearInterval(gameTimer);
+  $(".game-container").hide();
+  $(".center-container").addClass("game-over");
+  $(".center-container").text("Game Over");
   var vilianText = "Zombie-TA: Hahaha. You have been defeated by my Greatness. Better do your homework and try again if you dare!!!"
   vilianCalls(vilianText);
   gameTime = 0;
@@ -486,9 +492,8 @@ var gameTimer = setInterval(function () {
   } else if (gameTime == 5) {
     var vilianText = "I told you, that you'll never make it!!! Afterwards I'll do grocerys and have a beer."
   }
-
-
 }, 1000)
+
 function updateTime() {
   $("#time").text(gameTime);
 }
@@ -496,7 +501,7 @@ setInterval(function () {
   updateTime();
 }, 1000);
 
-// NPC / CHATBOX CONTROL FUNCTIONS
+// NPC AND CHATBOX CONTROL FUNCTIONS
 function prinessCalls(princessText) {
   $(".portrait-box").removeClass("budgi-portrait");
   $(".portrait-box").removeClass("villian-portrait");
