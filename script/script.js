@@ -1,16 +1,18 @@
 // MVP
 // B = border
+// D = dragon
 // E = end boss 
 // F = fire sword
 // G = Gate
 // U = unvisited
 // P = player
 // S = princess
+// T = dungeon budgi
 // V = visited
 
-// EXTRA
-// T = dungeon budgi
-// D = dragon
+
+
+
 
 //---------------MODEL---------------//
 ///////////////////////////////////////
@@ -34,7 +36,7 @@ function Game() {
     ["U", "B", "U", "B", "U", "U", "U", "B", "U", "B", "U", "B", "U", "B", "U", "B", "U", "B", "U",],
     ["U", "B", "U", "B", "F", "B", "U", "B", "U", "B", "U", "U", "U", "B", "U", "U", "U", "U", "U",],
     ["U", "B", "U", "U", "B", "B", "U", "B", "U", "B", "B", "U", "B", "U", "U", "B", "B", "B", "B",],
-    ["U", "B", "B", "U", "U", "U", "U", "B", "U", "U", "U", "U", "B", "U", "B", "U", "B", "U", "U",],
+    ["U", "B", "B", "U", "U", "U", "U", "B", "U", "U", "U", "U", "B", "U", "B", "U", "B", "D", "U",],
     ["U", "U", "U", "B", "B", "B", "B", "B", "U", "B", "B", "B", "B", "U", "B", "U", "U", "U", "U",],
     ["B", "B", "U", "U", "U", "U", "U", "U", "U", "B", "U", "U", "U", "U", "U", "U", "B", "U", "U",],
   ]
@@ -43,6 +45,9 @@ function Game() {
     y: 1,
     direction: "down",
     weapon: "",
+    budgiTimeCrystal: 0,
+    pet: "",
+    
   };
 };
 
@@ -127,6 +132,9 @@ function updateTiles() {
       if (hero.board[i][j] == "T") {
         $("#" + i + "-" + j).addClass("budgi");
       }
+      if (hero.board[i][j] == "D") {
+        $("#" + i + "-" + j).addClass("dragon");
+      }
     }
   }
   removeFogOfWar();
@@ -190,14 +198,21 @@ Game.prototype.moveUp = function () {
     gameOver();
   } else if (this.board[this.player.y - 1][this.player.x] === "T") {
     budgiDoesJokes();
-  } 
+  }
   else if (this.board[this.player.y - 1][this.player.x] === "F") {
     getFireSword();
     this.player.y = this.player.y - 1;
     this.board[this.player.y][this.player.x] = "P";
     this.board[this.player.y + 1][this.player.x] = "V";
-    changeDirectionLeft();
-  } else if (this.board[this.player.y - 1][this.player.x] === "E") {
+    changeDirectionUp();
+  } else if (this.board[this.player.y - 1][this.player.x] === "D") {
+    getDragon();
+    this.player.y = this.player.y - 1;
+    this.board[this.player.y][this.player.x] = "P";
+    this.board[this.player.y + 1][this.player.x] = "V";
+    changeDirectionUp();
+  }
+  else if (this.board[this.player.y - 1][this.player.x] === "E") {
     if (this.player.weapon === "firesword") {
       defeatEndBoss();
       this.player.y = this.player.y - 1;
@@ -233,7 +248,14 @@ Game.prototype.moveRight = function () {
     this.board[this.player.y][this.player.x] = "P";
     this.board[this.player.y][this.player.x - 1] = "V";
     changeDirectionRight();
-  } else if (this.board[this.player.y][this.player.x + 1] === "E") {
+  } else if (this.board[this.player.y][this.player.x + 1] === "D") {
+    getDragon();
+    this.player.x = this.player.x + 1;
+    this.board[this.player.y][this.player.x] = "P";
+    this.board[this.player.y][this.player.x - 1] = "V";
+    changeDirectionRight();
+  }
+  else if (this.board[this.player.y][this.player.x + 1] === "E") {
     if (this.player.weapon === "firesword") {
       defeatEndBoss();
       this.player.x = this.player.x + 1;
@@ -268,7 +290,14 @@ Game.prototype.moveDown = function () {
     this.board[this.player.y][this.player.x] = "P";
     this.board[this.player.y - 1][this.player.x] = "V";
     changeDirectionDown();
-  } else if (this.board[this.player.y + 1][this.player.x] === "E") {
+  } else if (this.board[this.player.y + 1][this.player.x] === "D") {
+    getDragon();
+    this.player.y = this.player.y + 1;
+    this.board[this.player.y][this.player.x] = "P";
+    this.board[this.player.y - 1][this.player.x] = "V";
+    changeDirectionDown();
+  }
+  else if (this.board[this.player.y + 1][this.player.x] === "E") {
     if (this.player.weapon === "firesword") {
       defeatEndBoss();
       this.player.y = this.player.y + 1;
@@ -298,6 +327,12 @@ Game.prototype.moveLeft = function () {
     budgiDoesJokes();
   } else if (this.board[this.player.y][this.player.x - 1] === "F") {
     getFireSword();
+    this.player.x = this.player.x - 1;
+    this.board[this.player.y][this.player.x] = "P";
+    this.board[this.player.y][this.player.x + 1] = "V";
+    changeDirectionLeft();
+  } else if (this.board[this.player.y][this.player.x - 1] === "D") {
+    getDragon();
     this.player.x = this.player.x - 1;
     this.board[this.player.y][this.player.x] = "P";
     this.board[this.player.y][this.player.x + 1] = "V";
@@ -378,31 +413,43 @@ function removeFogOfWar() {
   if ($("#" + (hero.player.y + viewDeltaOne) + "-" + (hero.player.x - viewDeltaOne)).hasClass("border")) {
     $("#" + (hero.player.y + viewDeltaOne) + "-" + (hero.player.x - viewDeltaOne)).addClass("border-visited");
   }
-
-
-  // GAME FUNCTION
 }
+
+// GAME FUNCTION
+
 function gameOver() {
   $(".center-container").hide();
-  var princessText = "Laure: Ironhero you've saved me. You're truly the best. Here's a beer for you :-)"
-    + "System: Congratulations! You have saved the Ironprincess. Refresh page for another try. Maby there is something you've missed?!";
-  prinessCalls(princessText);
+  if (hero.player.pet = "dragon") {
+    var princessText = "Laure: Ironhero! Thank you for saving me and bringing Pepe back to me. You are even better than the best. Here are two beers for you and also a slice of pizza."
+      + " Congratulations! You have saved the Ironprincess and Pepe. Refresh page for another try. Maby there is something you missed?!";
+    prinessCalls(princessText);
+  } else {
+    var princessText = "Laure: Ironhero you've saved me. You're truly the best. Here's a beer for you :-)"
+      + " Congratulations! You have saved the Ironprincess. Refresh page for another try. Maby there is something you missed?!";
+    prinessCalls(princessText);
+  }
+  gameTime = 0;
   console.log("You've won");
 }
 function playerDefeated() {
   $(".center-container").hide();
   var vilianText = "Zombie-TA: Hahaha. You have been defeated by my Greatness. Better do your homework and try again if you dare!!!"
   vilianCalls(vilianText);
+  gameTime = 0;
   console.log("You were defeated");
 }
 function defeatEndBoss() {
   clearInterval(gameTimer);
   var vilianText = "Zombie-TA: Arrrrghhh. I was defeated by a fool. You.. will never have the princ...*dies*."
   vilianCalls(vilianText);
+  gameTime = 0;
   console.log("You've defeated the Zombie-TA");
 }
 function getFireSword() {
   hero.player.weapon = "firesword";
+}
+function getDragon() {
+  hero.player.pet = "dragon"
 }
 
 
@@ -416,13 +463,13 @@ var gameTimer = setInterval(function () {
     var princessText = "Laure: Ironhero! I didn't finish my exercises in time so I was kidnapped by a zombie-TA. Please save me."
       + " The only thing that can defeat the zombie-TA is the sword of flames."
       + " It is hidden somewhere in this dungen und you have to find it."
-      + " Hurry up, we don't have much time!!!"
+      + " Hurry up, we don't have much time!!! Oh yeah, and yould pick up my baby dragon Pepe please? I've lost him somewhere inside this dungeon."
     prinessCalls(princessText);
     budgiText = "Chirp Chirp! "
 
   } else if (gameTime === 75) {
     var vilianText = "Zombie-TA: Hahaha. You will never save the Ironprincess stupid. She is mine forever and I will let her do excercies for eternity!!!"
-    + " Princess do you hear me?! FOREVER!!!"
+      + " Princess do you hear me?! FOREVER!!!"
     vilianCalls(vilianText);
   } else if (gameTime === 65) {
     var princessText = "Laure: Nooo never!!! Ironhero help me!"
@@ -465,15 +512,29 @@ function vilianCalls(vilianText) {
   $(".chat-box").text(vilianText);
 }
 function budgiDoesJokes() {
+
   var budgiJokes = [
-    "Aşkım the budgi: Chirp Chirp. I will tell you a joke! Can a kangaroo jump higher than a house? Of course, a house doesn’t jump at all. Now, this was fun but it also took you a few seconds, you better hurry up Ironhero! Chirp Chirp!!!",
-    "Aşkım the budgi: Chirp Chirp. I will tell you a black humor joke! You know you're ugly when you get handed the camera every time they make a group photo. Now, this was fun but it also took you a few seconds, you better hurry up Ironhero! Chirp Chirp!!!",
-    "Aşkım the budgi: Chirp Chirp. Did you know that I had a dog? My dog used to chase people on a bike a lot. It got so bad, finally I had to take his bike away. Now, this was fun but it also took you a few seconds, you better hurry up Ironhero! Chirp Chirp!!!",
-    "Aşkım the budgi: Chirp Chirp. Here's one for the boys and the girls. What is the difference between a snowman and a snowwoman? Snowballs!! Now, this was fun but it also took you a few seconds, you better hurry up Ironhero! Chirp Chirp!!!",
-    "Aşkım the budgi: Chirp Chirp. I have told you enough jokes. Aşkım wants a cookie. Chirp Chirp.",
-    "Aşkım the budgi: Chirp Chirp. Don't be so rude..give Aşkım a acookie. Chirp Chirp.",
+    "Aşkım the budgi: Chirp Chirp. I will give you my magical time Crystal once and tell you a joke! Can a kangaroo jump higher than a house? Of course, a house doesn’t jump at all. Now, this was fun but it also took you a few seconds, you better hurry up Ironhero! Chirp Chirp!!!",
+    "Aşkım the budgi: Chirp Chirp. I will give you my magical time Crystal once and tell you a black humor joke! You know you're ugly when you get handed the camera every time they make a group photo. Now, this was fun but it also took you a few seconds, you better hurry up Ironhero! Chirp Chirp!!!",
+    "Aşkım the budgi: Chirp Chirp. I will give you my magical time Crystal once and tell you a joke. Did you know that I had a dog? My dog used to chase people on a bike a lot. It got so bad, finally I had to take his bike away. Now, this was fun but it also took you a few seconds, you better hurry up Ironhero! Chirp Chirp!!!",
+    "Aşkım the budgi: Chirp Chirp. I will give you my magical time Crystal once and tell you a joke. Here's one for the boys and the girls. What is the difference between a snowman and a snowwoman? Snowballs!! Now, this was fun but it also took you a few seconds, you better hurry up Ironhero! Chirp Chirp!!!",
+    "Aşkım the budgi: Chirp Chirp. I have told you enough jokes. You can have my magical time crystal once, but therefore Aşkım wants a cookie. Chirp Chirp.",
+    "Aşkım the budgi: Chirp Chirp. Don't be so rude.. I gave you magical time crystal, so give Aşkım a acookie. Chirp Chirp.",
   ];
-  var ranNb = Math.floor(Math.random() * budgiJokes.length);
-  $(".portrait-box").addClass("budgi-portrait");
-  $(".chat-box").text(budgiJokes[ranNb]);
+
+  if (hero.player.budgiTimeCrystal === 0) {
+    var ranNb = Math.floor(Math.random() * budgiJokes.length);
+    $(".portrait-box").addClass("budgi-portrait");
+    $(".chat-box").text(budgiJokes[ranNb]);
+    budgiGivesExtraTime();
+  } else {
+    var ranNb = Math.floor(Math.random() * budgiJokes.length);
+    $(".portrait-box").addClass("budgi-portrait");
+    $(".chat-box").text(budgiJokes[ranNb]);
+  }
+}
+
+function budgiGivesExtraTime() {
+  hero.player.budgiTimeCrystal++;
+  gameTime += 20;
 }
