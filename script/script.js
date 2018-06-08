@@ -21,7 +21,7 @@
 function Game() {
   this.board = [
     ["G", "B", "B", "B", "U", "U", "U", "B", "B", "B", "B", "B", "U", "U", "U", "U", "U", "U", "U",],
-    ["P", "U", "U", "B", "U", "B", "U", "B", "U", "S", "U", "B", "U", "B", "B", "B", "U", "T", "U",],
+    ["P", "F", "S", "B", "U", "B", "U", "B", "U", "S", "U", "B", "U", "B", "B", "B", "U", "T", "U",],
     ["B", "B", "U", "B", "U", "B", "U", "B", "U", "U", "U", "B", "U", "B", "U", "B", "U", "U", "U",],
     ["U", "B", "U", "B", "U", "B", "U", "U", "B", "U", "B", "U", "U", "U", "U", "B", "B", "B", "B",],
     ["U", "U", "U", "B", "U", "B", "U", "B", "U", "E", "U", "B", "U", "B", "U", "B", "U", "B", "U",],
@@ -417,11 +417,15 @@ function removeFogOfWar() {
 
 // GAME FUNCTION
 
+
+
 function gameOver() {
   clearInterval(gameTimer);
   $(".game-container").hide();
   $(".center-container").addClass("game-over");
-  $(".center-container").text("Game Over");
+  $("#audio-box").html("<source src='/sound/fanfare5v3.ogg' type='audio/ogg'>");
+  document.getElementById("audio-box").load();
+  $(".center-container").text("Congratulations! You've won");
   if (hero.player.pet = "dragon") {
     var princessText = "Laure: Ironhero! Thank you for saving me and bringing Pepe back to me. You are even better than the best. Here are two beers for you and also a slice of pizza."
       + " Congratulations! You have saved the Ironprincess and Pepe. Refresh page for another try. Maby there is something you missed?!";
@@ -453,6 +457,9 @@ function defeatEndBoss() {
 }
 function getFireSword() {
   hero.player.weapon = "firesword";
+  $(".item-box-text").html("Flaming sword! <br>Boom..You rock!!");
+  $(".item-box-pic").addClass("flaming-sword-large");
+  $(".item-box").delay(6000).fadeOut();
 }
 function getDragon() {
   hero.player.pet = "dragon"
@@ -471,7 +478,7 @@ var gameTimer = setInterval(function () {
       + " It is hidden somewhere in this dungen und you have to find it."
       + " Hurry up, we don't have much time!!! Oh yeah, and yould pick up my baby dragon Pepe please? I've lost him somewhere inside this dungeon."
     prinessCalls(princessText);
-    budgiText = "Chirp Chirp! "
+   
 
   } else if (gameTime === 75) {
     var vilianText = "Zombie-TA: Hahaha. You will never save the Ironprincess stupid. She is mine forever and I will let her do excercies for eternity!!!"
@@ -490,7 +497,7 @@ var gameTimer = setInterval(function () {
     var princessText = "IRONHERO HURRY!!!"
     prinessCalls(princessText);
   } else if (gameTime == 5) {
-    var vilianText = "I told you, that you'll never make it!!! Afterwards I'll do grocerys and have a beer."
+    var vilianText = "Zombie-TA: I told you, that you'll never make it!!! Afterwards I'll do grocerys and have a beer."
   }
 }, 1000)
 

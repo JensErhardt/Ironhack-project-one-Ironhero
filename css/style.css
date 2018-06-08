@@ -82,6 +82,10 @@ h1 {
   flex-direction: column;
 
   align-items: center;
+  font-size: 18px;
+}
+#time {
+  font-size: 20px;
 }
 
 
@@ -200,4 +204,25 @@ h1 {
   background-image: url("../images/npc_misc/budgi_portrait.png");
   background-position: center;
   background-size: cover;
+}
+.flaming-sword-large {
+  background-image: url("../images/player_items/flaming-sword-crystal-large.png");
+  background-position: top;
+  background-size: 200px 100px;
+  background-repeat: no-repeat;
+}
+.item-box {
+  width: 100px;
+  height: auto;
+  font-size: 24px;
+  flex-direction: column;
+  align-content: center;
+}
+.item-box-text {
+  text-align: center;
+}
+.item-box-pic {
+  width: 100px;
+  height: 200px;
+
 }
