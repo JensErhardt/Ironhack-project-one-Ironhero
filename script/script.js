@@ -423,7 +423,7 @@ function gameOver() {
   clearInterval(gameTimer);
   $(".game-container").hide();
   $(".center-container").addClass("game-over");
-  $("#audio-box").html("<source src='/sound/fanfare5v3.mp3' type='audio/mp3'>");
+  $("#audio-box").html("<source src='sound/fanfare5v3.mp3' type='audio/mp3'>");
   document.getElementById("audio-box").load();
   $(".center-container").text("Congratulations! You've won");
   if (hero.player.pet = "dragon") {
