@@ -213,12 +213,13 @@ h1 {
 }
 .item-box {
   width: 100px;
-  height: auto;
+  height: auto; 
   font-size: 24px;
   flex-direction: column;
   align-content: center;
 }
 .item-box-text {
+  min-height: 200px;
   text-align: center;
 }
 .item-box-pic {

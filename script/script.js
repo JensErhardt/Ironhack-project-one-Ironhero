@@ -425,6 +425,8 @@ function gameOver() {
   $(".center-container").addClass("game-over");
   $("#audio-box").html("<source src='sound/fanfare5v3.mp3' type='audio/mp3'>");
   document.getElementById("audio-box").load();
+  $("#voice-box").html("<source src='sound/princess_outro.mp3' type='audio/mp3'>");
+  document.getElementById("voice-box").load();
   $(".center-container").text("Congratulations! You've won");
   if (hero.player.pet = "dragon") {
     var princessText = "Laure: Ironhero! Thank you for saving me and bringing Pepe back to me. You are even better than the best. Here are two beers for you and also a slice of pizza."
@@ -441,6 +443,8 @@ function gameOver() {
 function playerDefeated() {
   clearInterval(gameTimer);
   $(".game-container").hide();
+  $("#audio-box").html("<source src='sound/losefanfare.mp3' type='audio/mp3'>");
+  document.getElementById("audio-box").load();
   $(".center-container").addClass("game-over");
   $(".center-container").text("Game Over");
   var vilianText = "Zombie-TA: Hahaha. You have been defeated by my Greatness. Better do your homework and try again if you dare!!!"
@@ -480,7 +484,11 @@ var gameTimer = setInterval(function () {
     prinessCalls(princessText);
    
 
-  } else if (gameTime === 75) {
+  } else if (gameTime == 89) {
+    $("#voice-box").html("<source src='sound/princess_intro.mp3' type='audio/mp3'>");
+    document.getElementById("voice-box").load();
+  } 
+  else if (gameTime === 75) {
     var vilianText = "Zombie-TA: Hahaha. You will never save the Ironprincess stupid. She is mine forever and I will let her do excercies for eternity!!!"
       + " Princess do you hear me?! FOREVER!!!"
     vilianCalls(vilianText);
