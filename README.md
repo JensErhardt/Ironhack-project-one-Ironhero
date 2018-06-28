@@ -22,4 +22,4 @@ The game offers various features, such as:
 In order to set up the DOM-structure I used HTML 5 and to give it a view I used CSS 3. For The gamelogic I used Javascript und for the manipulation of the DOM I used jQuery.
 
 
- <a href:"https://jenserhardt.github.io/Ironhack-project-one-Ironhero/">Let's play Ironhero</a>
+ <a href="https://jenserhardt.github.io/Ironhack-project-one-Ironhero/">Let's play Ironhero</a>
