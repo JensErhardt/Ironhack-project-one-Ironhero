@@ -1,4 +1,4 @@
-Ironhero and the tale of the Ironprincess - Ironhack project #1
+<h1>Ironhero and the tale of the Ironprincess - Ironhack project #1</h1>
 
 <h2>Introduction</h2>
 
